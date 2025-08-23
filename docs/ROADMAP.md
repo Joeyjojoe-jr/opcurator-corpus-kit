@@ -1,1 +1,1 @@
-- stabilize; - expand; - evaluate;
+- stabilize, expand, evaluate
