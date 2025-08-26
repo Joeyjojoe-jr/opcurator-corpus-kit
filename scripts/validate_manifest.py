@@ -44,15 +44,15 @@ def main() -> None:
     parser.add_argument("manifests", nargs="+", help="Path(s) to manifest CSV files.")
     args = parser.parse_args()
 
-    ok = True
+    has_errors = False
     for path in args.manifests:
         try:
             validate_manifest(path)
             print(f"{path}: OK")
-        except Exception as exc:  # pylint: disable=broad-except
+        except (ValueError, OSError) as exc:
             print(f"{path}: {exc}", file=sys.stderr)
-            ok = False
-    if not ok:
+            has_errors = True
+    if has_errors:
         sys.exit(1)
 
 if __name__ == "__main__":
