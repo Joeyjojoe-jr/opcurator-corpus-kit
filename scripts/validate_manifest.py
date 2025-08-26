@@ -23,12 +23,17 @@ def validate_manifest(path: str) -> None:
         reader = csv.DictReader(f)
         if reader.fieldnames is None:
             raise ValueError("missing header")
-        missing_cols = [c for c in REQUIRED_COLUMNS if c not in reader.fieldnames]
-        extra_cols = [c for c in reader.fieldnames if c not in REQUIRED_COLUMNS]
-        if missing_cols:
-            raise ValueError(f"missing columns: {', '.join(missing_cols)}")
-        if extra_cols:
-            raise ValueError(f"unexpected columns: {', '.join(extra_cols)}")
+        header_columns = set(reader.fieldnames)
+        missing_cols = REQUIRED_COLUMNS - header_columns
+        extra_cols = header_columns - REQUIRED_COLUMNS
+
+        if missing_cols or extra_cols:
+            error_messages = []
+            if missing_cols:
+                error_messages.append(f"missing columns: {', '.join(sorted(missing_cols))}")
+            if extra_cols:
+                error_messages.append(f"unexpected columns: {', '.join(sorted(extra_cols))}")
+            raise ValueError("; ".join(error_messages))
         for line_num, row in enumerate(reader, start=2):
             missing = [c for c in REQUIRED_COLUMNS if not row.get(c)]
             if missing:
