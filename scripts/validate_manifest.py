@@ -4,9 +4,9 @@
 import argparse
 import csv
 import sys
-from typing import List
+from typing import FrozenSet
 
-REQUIRED_COLUMNS: List[str] = [
+REQUIRED_COLUMNS: FrozenSet[str] = frozenset([
     "path",
     "title",
     "author",
@@ -16,7 +16,7 @@ REQUIRED_COLUMNS: List[str] = [
     "license_raw",
     "license_norm",
     "source_url",
-]
+])
 
 def validate_manifest(path: str) -> None:
     with open(path, newline='', encoding='utf-8') as f:
