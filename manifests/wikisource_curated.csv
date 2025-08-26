@@ -1,1 +1,2 @@
-title,author,year,language,source_url,output_basename
+path,title,author,translator,year,language,license_raw,license_norm,source_url
+texts/wikisource/the_republic.txt,The Republic,Plato,Benjamin Jowett,1888,en,Public domain,pd,https://en.wikisource.org/wiki/The_Republic
